@@ -1,0 +1,25 @@
+# version: "3"
+services:
+  frontend:
+    image: react:day1
+    build:
+      context: fe
+      dockerfile: Dockerfile
+    ports:
+        - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http//localhost:8000
+      REACT_APP_LESSION_DAY: day1
+
+  backend:
+    image: fastapi:day1
+    build:
+      context: api
+      dockerfile: Dockerfile
+    ports:
+        - "8000:8000"
+    environment:
+      HNG_LESSON_DAY: day1
+      HNG_API_ORIGINS: http//localhost:3000
+      HNG_API_HOST: localhost
+      HNG_API_PORT: 8000
