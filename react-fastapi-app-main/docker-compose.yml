@@ -1,25 +1,41 @@
-# version: "3"
+version: "3"
+
+networks:
+  react-fastapi:
+    driver: bridge
+
+volumes:
+  fastapi_data:
+
 services:
   frontend:
-    image: react:day1
+    depends_on:
+      - backend
+    container_name: react-frontend
+    image: react:day2
     build:
       context: fe
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-day2
     ports:
-        - "3000:3000"
-    environment:
-      REACT_APP_API_URL: http//localhost:8000
-      REACT_APP_LESSION_DAY: day1
+        - 3000:3000
+    env_file:
+      - path: ./fe/.env
+        required: false
+    networks:
+      - react-fastapi
 
   backend:
-    image: fastapi:day1
+    container_name: fastapi-backend
+    image: fastapi:day2
     build:
       context: api
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-day2
     ports:
-        - "8000:8000"
-    environment:
-      HNG_LESSON_DAY: day1
-      HNG_API_ORIGINS: http//localhost:3000
-      HNG_API_HOST: localhost
-      HNG_API_PORT: 8000
+        - 8000:8000
+    env_file:
+      - path: ./api/.env
+        required: true
+    networks:
+      - react-fastapi
+    volumes:
+      - fastapi_data:/api/data
