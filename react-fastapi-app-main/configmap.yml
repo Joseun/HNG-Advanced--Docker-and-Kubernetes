@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: react-fastapi-config
+data:
+  # property-like keys; each key maps to a simple value
+  react_app_api_url: http://localhost:30000
+  react_app_lesson_day: day3
+  hng_lesson_day: day3
+  hng_api_origins: http://localhost:30111
+  hng_api_host: "0.0.0.0"
+  hng_api_port: "8000"

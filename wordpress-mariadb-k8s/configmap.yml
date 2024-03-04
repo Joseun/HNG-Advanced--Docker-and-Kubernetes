@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mariadb-wordpress-config
+data:
+  # property-like keys; each key maps to a simple value
+  mariadb_database: hng11_wordpress
+  wordpress_database_host: mariadb-service
+  wordpress_database_name: hng11_wordpress

@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+
+  name: wordpress-deployment
+
+spec:
+
+  replicas: 1
+
+  selector:
+
+    matchLabels:
+
+      app: wordpress
+
+  template:
+
+    metadata:
+
+      labels:
+
+        app: wordpress
+
+    spec:
+
+      containers:
+
+      - name: wordpress
+
+        image: hngtech11/wordpress:day1
+
+        env:
+        # Define the environment variable
+          - name: WORDPRESS_DATABASE_USER
+            valueFrom: 
+              secretKeyRef: 
+                key: wordpress_database_user
+                name: wordpress-db-creds
+
+          - name: WORDPRESS_DATABASE_PASSWORD
+            valueFrom: 
+              secretKeyRef: 
+                key: wordpress_database_password
+                name: wordpress-db-creds
+
+          - name: WORDPRESS_DATABASE_HOST
+            valueFrom:
+              configMapKeyRef:
+                # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+                name: mariadb-wordpress-config
+                # Specify the key associated with the value
+                key: wordpress_database_host
+          
+          - name: WORDPRESS_DATABASE_NAME
+            valueFrom:
+              configMapKeyRef:
+                # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+                name: mariadb-wordpress-config
+                # Specify the key associated with the value
+                key: wordpress_database_name
+
+        ports:
+
+          - containerPort: 8443
+
+          - containerPort: 8080
+
+---
+apiVersion: v1
+
+kind: Service
+
+metadata:
+
+  name: wordpress-service
+
+spec:
+
+  type: NodePort
+
+  selector:
+
+    app: wordpress
+
+  ports:
+
+    - protocol: TCP
+
+      port: 8080
+
+      targetPort: 8080
+
+      nodePort: 30000

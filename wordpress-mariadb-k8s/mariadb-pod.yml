@@ -1,0 +1,23 @@
+apiVersion: v1
+
+kind: Pod
+
+metadata:
+
+  name: mariadbpod
+
+  labels:
+
+    app: mariadb
+
+spec:
+
+  containers:
+
+  - name: mariadb
+
+    image: hngtech11/mariadb:latest
+
+    ports:
+
+    - containerPort: 3306
