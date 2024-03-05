@@ -17,3 +17,5 @@ data:
   HNG_API_PORT: '8000'
 
   HNG_API_URL: {{ .Values.hng_api_url }}
+
+  DUMMY_VALUE: {{ .Values.dummy_value }}
