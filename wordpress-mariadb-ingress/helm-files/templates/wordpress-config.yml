@@ -14,6 +14,10 @@ data:
 
   MARIADB_DATABASE: hng11_wordpress
 
+  MARIADB_VERSION: {{ .Values.mariadb_version }}
+
+  MARIADB_LOCATION: {{ .Values.mariadb_location }}
+
 ---
 apiVersion: v1
 
