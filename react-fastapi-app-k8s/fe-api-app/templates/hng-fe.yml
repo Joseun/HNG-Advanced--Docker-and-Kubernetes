@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+
+  name: fe
+
+spec:
+
+  replicas: 1
+
+  selector:
+
+    matchLabels:
+
+      app: fe
+
+  template:
+
+    metadata:
+
+      labels:
+
+        app: fe
+
+    spec:
+
+      containers:
+
+      - name: fe
+
+        image: joseun/react:day2
+
+        env:
+
+          - name: REACT_APP_LESSON_DAY
+
+            valueFrom:
+
+              configMapKeyRef:
+
+                name: fe-api-config
+
+                key: HNG_LESSON_DAY
+
+
+          - name: REACT_APP_API_URL
+            valueFrom:
+
+              configMapKeyRef:
+
+                name: fe-api-config
+
+                key: HNG_API_URL
+        ports:
+
+          - containerPort: 3000
+---
+apiVersion: v1
+
+kind: Service
+
+metadata:
+
+  name: fe-service
+
+spec:
+
+  type: ClusterIP
+
+  selector:
+
+    app: fe
+
+  ports:
+
+    - protocol: TCP
+
+      port: 3000
+
+      targetPort: 3000

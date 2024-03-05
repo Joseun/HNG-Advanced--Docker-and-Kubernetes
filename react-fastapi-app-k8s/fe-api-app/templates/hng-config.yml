@@ -1,0 +1,19 @@
+apiVersion: v1
+
+kind: ConfigMap
+
+metadata:
+
+  name: fe-api-config
+
+data:
+
+  HNG_LESSON_DAY: {{ .Values.hng_lesson_day }}
+
+  HNG_API_ORIGINS: {{ .Values.hng_api_origins }}
+
+  HNG_API_HOST: {{ .Values.hng_api_host }}
+
+  HNG_API_PORT: '8000'
+
+  HNG_API_URL: {{ .Values.hng_api_url }}
